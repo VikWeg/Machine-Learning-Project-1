@@ -1,4 +1,4 @@
-function [ratio,ev,a,b] = MakePolyPrediction(selection,Order)
+function [ratio,ev,a,b] = MakePolyPrediction(selection,Order,transform)
 
 global TrainingData
 global ValidationData
@@ -12,12 +12,12 @@ StdX=repmat(std(X),length(X),1);
 MT=repmat(mean(T),length(T),1);
 StdT=repmat(std(T),length(T),1);    
 
-[X,T]=ExtractData(TrainingData,selection,'DivideByStd');
+[X,T]=ExtractData(TrainingData,selection,transform);
 [model,ev,a,b,g]=LinearRegressor(X,T,'poly',Order);  %offset!
 
 ratio=g/length(model);
 
-pred=Predictor(ValidationData,selection,'DivideByStd',model,'poly',Order);
+pred=Predictor(ValidationData,selection,transform,model,'poly',Order);
 
 hist(pred,50:100:11950)
 
