@@ -4,7 +4,7 @@ if strcmp('poly',basis)
 xmin=min(X);
 xmax=max(X);
 
-xfit=(xmin:((xmax-xmin)/10):xmax)';
+xfit=(xmin:((xmax-xmin)/50):xmax)';
 
 plot(X,T,'ro',xfit,DesignMatrix(xfit,basis,M)*model)
 

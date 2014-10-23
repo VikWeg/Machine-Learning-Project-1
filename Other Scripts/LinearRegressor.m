@@ -44,7 +44,6 @@ function ev = Evidence(a,b,m,Si,Phi,T)
 
 M=length(m);
 N=length(T);
-d=det(Si);en=E(a,b,m,Phi,T);
 ev=(M/2)*log(a)+(N/2)*log(b)-E(a,b,m,Phi,T)-(1/2)*log(det(Si))-(N/2)*log(2*pi);
 
 end
