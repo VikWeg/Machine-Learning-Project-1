@@ -1,13 +1,4 @@
 function [m,ev,a,b,g,UnreducedParameters]=LinearRegressor(X,T,basis,M)
-%X is Nx(# of features)
-%T is Nx1
-
-%global TrainingData ValidationData TestData
-%global unreduced
-
-%DimTraining=size(TrainingData);
-%DimValidation=size(ValidationData);
-%DimTest=size(TestData);
 
 N=length(X);
 
@@ -16,13 +7,6 @@ b=1e-6;
 g=1e-6;
 
 unreducedPhi=DesignMatrix(X,basis,M);
-Moriginal=size(unreducedPhi);
-%PhiT=Phi';%MeffxN matrix
-%PhiTPhi=(Phi')*Phi; %MeffxM matrix
-%L=eig(PhiTPhi);%Meffx1 vector
-
-%ReducePhi(DesignMatrix([X;Xvalid;Xtest],basis,M));
-%Phi=Phi(:,unreduced);
 
 [Phi,reducedV]=ReducePhi(unreducedPhi);
 
@@ -36,7 +20,7 @@ eps=1;while eps>10^-5
 
     Si=a*eye(Mreduced(2))+b*PhiTPhi;
 
-    m=Si\(b*PhiT*T);%Mx1 vector
+    m=Si\(b*PhiT*T);
 
     gold=g;
     g=sum(b*L./(b*L+a));
@@ -47,7 +31,6 @@ eps=1;while eps>10^-5
     eps=abs(g-gold)/gold;
     end
        
-
 ev=Evidence(a,b,m,Si,Phi,T);
 UnreducedParameters=Mreduced(2);
 
