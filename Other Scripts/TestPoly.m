@@ -1,32 +1,28 @@
-function TestPoly(selection,order,transform)
+function TestPoly(orders)
 
 global TrainingData
 DimTrain=size(TrainingData);
 
 figure
-tit='selection=%d order=%d ratio=%1.2f ev=%4.1f L=%6.1f';
+tit='order=%d|#UnRedPar=%d|G=%4.1f|ev=%4.1f|L=%6.5f';
 
-i=selection(1,1);while i<=selection(1,2)
-        j=order(1,1);while j<=order(1,2)
+        j=orders(1,1);while j<=orders(1,2)
         
-                        [prediction,evidence,alpha,beta,gamma,NumberOfParameters]=MakePolyPrediction(i,j,transform);
+                        [prediction,evidence,alpha,beta,gamma,UnReducedParameters]=PolyPredict(j);
                         
-                        subplot(selection(1,2)-selection(1,1)+1,order(1,2)-order(1,1)+1,(i-selection(1,1))*order(1,2)+j-order(1,1)+1)
+                        subplot(3,3,j-orders(1,1)+1)
                         
-                        hist(pred,50:100:10000);                   
-                        title(sprintf(tit,i,j,ratio,ev,a/b))
+                        hist(prediction,50:100:10000);                   
+                        title(sprintf(tit,j,UnReducedParameters,gamma,evidence,alpha/beta))
                         
-                        hold on
-                        hist(comp,50:100:10000);
+                        hold on                     
                         hist(TrainingData(1:DimTrain(1),DimTrain(2)),50:100:10000);
                         h=findobj(gca,'Type','patch');
                         set(h(1),'FaceColor','b','EdgeColor','w','facealpha',0.5)
-                        set(h(2),'FaceColor','g','EdgeColor','w','facealpha',0.5)
-                        set(h(3),'FaceColor','r','EdgeColor','w','facealpha',0.5)
+                        set(h(2),'FaceColor','r','EdgeColor','w','facealpha',0.5)
                         hold off
                         
                         j=j+1;
                      end
-                i=i+1;
-                end
+
 end

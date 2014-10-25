@@ -48,9 +48,8 @@ eps=1;while eps>10^-5
     end
        
 
-ev=Evidence(a,b,m,Si,Phi,T);
+ev=Evidence(a,b,m,Si,unreducedPhi,T);
 UnreducedParameters=Mreduced(2);
-
 m=reducedV*m;
 end
 
