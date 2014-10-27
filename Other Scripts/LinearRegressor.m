@@ -1,5 +1,7 @@
 function [m,ev,a,b,g,UnreducedParameters]=LinearRegressor(X,T,basis,M)
 
+global I
+
 N=length(X);
 
 a=1e-6;
@@ -7,6 +9,7 @@ b=1e-6;
 g=1e-6;
 
 unreducedPhi=DesignMatrix(X,basis,M);
+unreducedPhi=unreducedPhi(:,I(1,11129:11628));
 
 [Phi,reducedV]=ReducePhi(unreducedPhi);
 
