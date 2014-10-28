@@ -1,6 +1,5 @@
 function [m,ev,a,b,g,UnreducedParameters]=LinearRegressor(X,T,basis,M)
 
-global I
 
 N=length(X);
 
@@ -9,9 +8,11 @@ b=1e-6;
 g=1e-6;
 
 unreducedPhi=DesignMatrix(X,basis,M);
-unreducedPhi=unreducedPhi(:,I(1,11129:11628));
 
 [Phi,reducedV]=ReducePhi(unreducedPhi);
+
+%%% Everything down here is described in Bishop pages 167-169
+
 
 PhiT=Phi';
 PhiTPhi=(Phi')*Phi;
