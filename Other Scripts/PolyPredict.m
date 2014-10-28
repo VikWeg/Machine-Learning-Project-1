@@ -17,17 +17,29 @@ StdX=std([Xtrain;ValidationData;TestData]);
 logMeanX=mean(log2([Xtrain;ValidationData;TestData]));
 logStdX=std(log2([Xtrain;ValidationData;TestData]));
 
-gaussXtrain=exp(-(1/2)*((Xtrain-repmat(MeanX,DimTraining(1),1))./repmat(StdX,DimTraining(1),1)).^2);
-gaussXvalid=exp(-(1/2)*((ValidationData-repmat(MeanX,DimValidation(1),1))./repmat(StdX,DimValidation(1),1)).^2);
+sqrtMeanX=mean(sqrt([Xtrain;ValidationData;TestData]));
+sqrtStdX=std(sqrt([Xtrain;ValidationData;TestData]));
+
+gauXtrain=exp(-(1/2)*((Xtrain-repmat(MeanX,DimTraining(1),1))./repmat(StdX,DimTraining(1),1)).^2);
+gauXvalid=exp(-(1/2)*((ValidationData-repmat(MeanX,DimValidation(1),1))./repmat(StdX,DimValidation(1),1)).^2);
+
+sigXtrain=sigmf((Xtrain-repmat(MeanX,DimTraining(1),1))./repmat(StdX,DimTraining(1),1),[1 0]);
+sigXvalid=sigmf((ValidationData-repmat(MeanX,DimValidation(1),1))./repmat(StdX,DimValidation(1),1),[1 0]);
 
 logXtrain=(log2(Xtrain)-repmat(logMeanX,DimTraining(1),1))./repmat(logStdX,DimTraining(1),1);
-logXvalid=(log2(ValidationData)-repmat(logMeanX,DimTraining(1),1))./repmat(logStdX,DimValidation(1),1);
+logXvalid=(log2(ValidationData)-repmat(logMeanX,DimValidation(1),1))./repmat(logStdX,DimValidation(1),1);
+
+sqrtXtrain=(sqrt(Xtrain)-repmat(sqrtMeanX,DimTraining(1),1))./repmat(sqrtStdX,DimTraining(1),1);
+sqrtXvalid=(sqrt(ValidationData)-repmat(sqrtMeanX,DimValidation(1),1))./repmat(sqrtStdX,DimValidation(1),1);
+
+tanhXtrain=tanh((Xtrain-repmat(MeanX,DimTraining(1),1))./repmat(StdX,DimTraining(1),1));
+tanhXvalid=tanh((ValidationData-repmat(MeanX,DimValidation(1),1))./repmat(StdX,DimValidation(1),1));
 
 Xtrain=(Xtrain-repmat(MeanX,DimTraining(1),1))./repmat(StdX,DimTraining(1),1);
 Xvalid=(ValidationData-repmat(MeanX,DimValidation(1),1))./repmat(StdX,DimValidation(1),1);
 
-Xtrain=[Xtrain logXtrain gaussXtrain];
-Xvalid=[Xvalid logXvalid gaussXvalid];
+Xtrain=[logXtrain tanhXtrain];
+Xvalid=[logXvalid tanhXvalid];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% T values
 T=TrainingData(:,DimTraining(2));

@@ -20,7 +20,7 @@ L=eig(PhiTPhi);
 
 Mreduced=size(Phi);
 
-eps=1;while eps>10^-5
+eps=1;while eps>10^-6
 
     Si=a*eye(Mreduced(2))+b*PhiTPhi;
 

@@ -9,7 +9,7 @@ Svalues=diag(S)';
 %%% "A" controls how many singular values you take into account.
 %%% Basically,the larger A, the more singular values are kept.
 
-A=1;
+A=100;
 
 Mreduced=min(length(Svalues),round(A/(-(1/(length(Svalues)-1)*log(Svalues(1,end)/Svalues(1,1))))));
 
